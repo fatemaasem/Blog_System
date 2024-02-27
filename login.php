@@ -117,25 +117,37 @@
     <div>
     <?php
             //will be from register form ..if the register successfully
-                if(isset($_SESSION['success'])){
-                    printSuccessMessage($_SESSION['success']); 
-                    unset($_SESSION['success']);
-                    session_destroy();
-                    
-                }
+              /*
                 //will be if there are errors during login
                 if(isset($_SESSION['errors'])){
                     printErrorArray($_SESSION['errors']);
                      unset($_SESSION['errors']);
-                     session_destroy();
+                     
                  }
+                 */
             ?>
-
+       
         <form class="form" action="handle/login.php" method="post">
-           
-            <h3><?=$mes['Login Here']?></h3>
+        <h3><?=$mes['Login Here']?></h3>
+           <?php
+        if(isset($_SESSION['success'])){
+                printSuccessMessage($_SESSION['success']); 
+                unset($_SESSION['success']);
+    }?>
             <input placeholder="<?=$mes['Enter Email']?>" class="input" type="email" name="email" id=""value="">
+            <?php 
+            if(isset($_SESSION['email_error'])):
+                print_error($_SESSION['email_error']);
+                unset($_SESSION['email_error']);
+            endif;
+                ?>
             <input class="input" placeholder="<?=$mes['Enter Password']?>" type="password" name="password" id="">
+            <?php 
+            if(isset($_SESSION['password_error'])):
+                print_error($_SESSION['password_error']);
+                unset($_SESSION['password_error']);
+            endif;
+                ?>
             <button type="submit" name="login"><?=$mes['Login']?></button>
            
             

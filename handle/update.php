@@ -4,6 +4,7 @@
 
     //check if the previous page is editPost.php
     if(isset($_POST['submit'])&&isset($_GET['id'])){
+        $user_id=$_SESSION['id'];
         $errors=[];
         $id=$_GET['id'];
         $oldPost=checkID('posts',$id);
@@ -26,20 +27,23 @@
         $bodyError=0;
         if(empty($title)){
             $errors[]="Title must be not empty.";
+            $_SESSION['title_error'][]="Title must be not empty.";
             $titleError=1;
         }
         if(is_numeric($title)){
             $errors[]="Title must be string.";
+            $_SESSION['title_error'][]="Title must be string.";
             $titleError=1;
         }
         if(empty($body)){
             $bodyError=1;
             $errors[]="Body must be not empty.";
+            $_SESSION['body_error'][]="Body must be not empty.";
         }
         if(is_numeric($body)){
             $bodyError=1;
             $errors[]="Body must be string.";
-        }
+            $_SESSION['body_error'][]="Body must be string.";}
         //check if image is upload ...image not required
         $foundImage=0;
         if($imageError==0){
@@ -48,9 +52,11 @@
         //size must not be greater than 2 mega byte
         if($foundImage==1&&$imageSize>2){
             $errors[]="Image size must not be greater than 2 mega byte";
+            $_SESSION['image_error'][]="Image size must not be greater than 2 mega byte";
         }
         if($foundImage==1&&!in_array($imageExt,$allPathImage)){
             $errors[]="Extension is fault . ";
+            $_SESSION['image_error'][]="Extension is fault . ";
         }
        
         //delete an old picture from upload file if it found
@@ -70,9 +76,9 @@
         //insert in database
        
         if(empty($newName))
-        $query="update posts set `title`='$title' ,`body`='$body',`image`=null,`user_id`=1 where id =$id";
+        $query="update posts set `title`='$title' ,`body`='$body',`image`=null,`user_id`=$user_id where id =$id";
         else
-        $query="update posts set `title`='$title' ,`body`='$body',`image`='$newName',`user_id`=1 where id =$id";
+        $query="update posts set `title`='$title' ,`body`='$body',`image`='$newName',`user_id`=$user_id where id =$id";
         $runQuery=mysqli_query($conn,$query);
         if($runQuery){
             $_SESSION['success']="updated Successfully.";

@@ -1,10 +1,4 @@
-<?php
-$lang='en';
-  if(isset($_SESSION['lang'])){
-    $lang=$_SESSION['lang'];
-   //header("location: test.php");
-  }
- ?>
+
 <!DOCTYPE html>
 <html lang="<?=$lang?>">
 
@@ -63,6 +57,8 @@ body {
     <header class="padding-0">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
+          <?php if(isset($_SESSION['login'])):?>
+             <h3 class="navbar-brand" style="color: white;"> <?=$_SESSION['login']?></h3><?php endif;?>
           <a class="navbar-brand" href="index.php"><h2> <em><?=$mes['Blog']?></em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -79,14 +75,14 @@ body {
                 <a class="nav-link" href="addPost.php"><?=$mes['Add New Post']?></a>
               </li>
               <?php endif;?>
-              <?php if(isset($_SESSION['lang'])&&($_SESSION['lang']=='ar')):
+              <?php if(($_SESSION['lang']=='ar')):
           
                 ?>
               <li class="nav-item">
                 <a class="nav-link" href="inc/language.php?lang=<?='en'?>">انجليزيه</a>
               </li>
               <?php endif;?>
-              <?php if(!isset($_SESSION['lang'])||$_SESSION['lang']=='en'):
+              <?php if(isset($_SESSION['lang'])&&($_SESSION['lang']=='en')):
           
                 ?>
               <li class="nav-item">

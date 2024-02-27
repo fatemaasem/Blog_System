@@ -16,6 +16,15 @@
             echo '</div>';
         }
     }
+    function print_error($errors){
+        if(is_array($errors)){
+            foreach ($errors as $error) {
+                echo '<li class="alert alert-danger">' . $error . '</li>';}
+        }
+        else
+        echo '<li class="alert alert-danger">' . $errors . '</li>';
+
+    }
     //function to print success massage
     function printSuccessMessage($message) {
         echo '<div class="container">';

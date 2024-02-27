@@ -11,6 +11,7 @@
         //var_dump(validateString($_POST['name']));
         if(is_array(validateString($_POST['name']))){
             $errors=array_merge($errors,validateString($_POST['name']));
+            $_SESSION['name_error']="Name is not valid";
         }
         else{
             $name=validateString($_POST['name']);
@@ -19,11 +20,11 @@
             $email=validateEmail($_POST['email']);
         }
         else{
-            $errors[]='Email is not valid.';
+           $_SESSION['email_error']='Email is not valid.';
         }
         //check of password length
         if(!validLength($password,6)){
-            $errors[]='password must be greater than 6 char.';
+            $_SESSION["password_error"]='password must be greater than 6 char.';
         }
         if(empty($errors)){
             //insert in database
@@ -40,6 +41,7 @@
         $pattern = "/^(01)[0125]\d{8}$/";
         if(!preg_match($pattern, $phone)){
             $errors[]='phone is not valid';
+            $_SESSION['phone_error']='phone is not valid';
         }
         if(!empty($errors)){
             $_SESSION['errors']=$errors;

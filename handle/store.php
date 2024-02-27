@@ -2,6 +2,7 @@
 <?php require_once '../inc/function.php' ?>
 <?php
 if(isset($_POST['add'])){
+    $id=$_SESSION['id'];
     $title=htmlspecialchars(trim($_POST['title']));
     $body=htmlspecialchars(trim($_POST['body']));
     $image=$_FILES['image'];
@@ -16,18 +17,22 @@ if(isset($_POST['add'])){
     $bodyError=0;
     if(empty($title)){
         $insertErrors[]="Title must be not empty.";
+        $_SESSION['title_error'][]="Title must be not empty.";
         $titleError=1;
     }
     if(is_numeric($title)){
         $insertErrors[]="Title must be string.";
+        $_SESSION['title_error'][]="Title must be string.";
         $titleError=1;
     }
     if(empty($body)){
         $bodyError=1;
+        $_SESSION['body_error'][]="Body must be not empty.";
         $insertErrors[]="Body must be not empty.";
     }
     if(is_numeric($body)){
         $bodyError=1;
+        $_SESSION['body_error'][]="Body must be string.";
         $insertErrors[]="Body must be string.";
     }
     //check if image is upload ...image not required
@@ -38,8 +43,10 @@ if(isset($_POST['add'])){
     //size must not be greater than 2 mega byte
     if($foundImage==1&&$imageSize>2){
         $insertErrors[]="Image size must not be greater than 2 mega byte";
+        $_SESSION['image_error'][]="Image size must not be greater than 2 mega byte";
     }
     if($foundImage==1&&!in_array($imageExt,$allPathImage)){
+        $_SESSION['image_error'][]="Extension is fault . ";
         $insertErrors[]="Extension is fault . ";
     }
     
@@ -52,11 +59,12 @@ if(isset($_POST['add'])){
     }
     //insert in database
     if(empty($newName))
-    $query="insert into posts (`title`,`image`,`body`,`user_id`) values('$title',null,'$body',1)";
+    $query="insert into posts (`title`,`image`,`body`,`user_id`) values('$title',null,'$body',$id)";
     else
-    $query="insert into posts (`title`,`image`,`body`,`user_id`) values('$title','$newName','$body',1)";
+    $query="insert into posts (`title`,`image`,`body`,`user_id`) values('$title','$newName','$body',$id)";
     $runQuery=mysqli_query($conn,$query);
     if($runQuery){
+        if(empty($insertErrors))
         $_SESSION['success']="Insert Successfully.";
     }
     else{

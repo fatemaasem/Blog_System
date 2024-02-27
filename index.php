@@ -28,22 +28,16 @@
     </div>
     <!-- Banner Ends Here -->
     <?php 
+   /*
+    
    
-    if(isset($_SESSION['success'])){
-      if(isset($_SESSION['login'])){
-     
-      }
-      printSuccessMessage($_SESSION['success']); 
-      unset($_SESSION['success']);
-      
-      
-    }
-   
-    else if(isset($_SESSION['errors'])){
+    if(isset($_SESSION['errors'])){
       printErrorArray($_SESSION['errors']);
       unset($_SESSION['errors']);
       
+      
     }
+    */
     ?>
     <?php
     
@@ -79,10 +73,24 @@
             <div class="section-heading ">
               
               <h2  class=<?php if($_SESSION['lang']=='ar') echo"text-end"?>><?= $mes['Latest Posts']?></h2>
+            
+                <?php /*
+                  if(isset($_SESSION['success'])){
+                printSuccessMessage($_SESSION['success']); 
+                unset($_SESSION['success']);
+    }
+    */
+   ?>
               
               <!-- <a href="products.html">view all products <i class="fa fa-angle-right"></i></a> -->
             </div>
           </div>
+          <?php
+                  if(isset($_SESSION['success'])){
+                printSuccessMessage($_SESSION['success']); 
+                unset($_SESSION['success']);
+    }
+   ?>
           <?php
                 foreach($posts as $post):
                 ?>
@@ -113,6 +121,7 @@
           <?php endforeach;?>
         </div>
       </div>
+      <!--  -->
    <div class=' d-flex justify-content-center'>
       <nav aria-label="Page navigation example">
         <ul class="pagination">
@@ -126,6 +135,7 @@
         </ul>
       </nav>
    </div>
+   <!--  -->
 </div>
 
  

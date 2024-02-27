@@ -43,13 +43,12 @@
    
       </div>
     <?php
-
+/*
 if(isset($_SESSION['success'])){
 printSuccessMessage($_SESSION['success']); 
 unset($_SESSION['success']);
-session_destroy();
 }
-
+*/
 ?>
     <div class="best-features about-features">
       <div class="container">
@@ -59,6 +58,10 @@ session_destroy();
               <h2 class=<?php if($_SESSION['lang']=='ar') echo"text-end"?>><?=$mes['Our Post Image']?></h2>
             </div>
           </div>
+         <?php if(isset($_SESSION['success'])){
+printSuccessMessage($_SESSION['success']); 
+unset($_SESSION['success']);
+}?>
           <div class="col-md-6">
             <div class="right-image">
               <img src="upload/<?=$post['image'];?>" alt="">

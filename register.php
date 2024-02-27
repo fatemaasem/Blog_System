@@ -123,20 +123,46 @@
     </div>
     <div>
     <?php
+    /*
     if(isset($_SESSION['errors'])){
         printErrorArray($_SESSION['errors']);
          unset($_SESSION['errors']);
-         session_destroy();
+        
      }
+     */
 ?>
 
         <form class="form" action="handle/register.php" method="post">
             
             <h3><?=$mes['Register Here']?></h3>
             <input placeholder="<?=$mes['Enter Name']?>" class="input" type="text" name="name" id="">
+            <?php 
+            if(isset($_SESSION['name_error'])):
+                print_error($_SESSION['name_error']);
+                unset($_SESSION['name_error']);
+            endif;
+                ?>
             <input placeholder="<?=$mes['Enter Email']?>" class="input" type="email" name="email" id=""value="">
+            <?php 
+            if(isset($_SESSION['email_error'])):
+                print_error($_SESSION['email_error']);
+                unset($_SESSION['email_error']);
+            endif;
+                ?>
             <input class="input" placeholder="<?=$mes['Enter Password']?>" type="password" name="password" id="">
+            <?php 
+            if(isset($_SESSION['password_error'])):
+                print_error($_SESSION['password_error']);
+                unset($_SESSION['password_error']);
+            endif;
+                ?>
             <input class="input" placeholder="<?=$mes['Enter Phone']?>" type="text" name="phone" id="">
+            <?php 
+            if(isset($_SESSION['phone_error'])):
+                print_error($_SESSION['phone_error']);
+                unset($_SESSION['phone_error']);
+            endif;
+                ?>
             <button type="submit" name="register"><?=$mes['Register']?></button>
 
         </form>

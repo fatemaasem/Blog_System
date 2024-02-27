@@ -11,6 +11,7 @@
         }
         else{
             $errors[]='Email is not valid.';
+            $_SESSION['email_error']='Email is not valid.';
         }
         $userName='';
         if(empty($errors)){
@@ -25,6 +26,7 @@
                 if (!password_verify($password,$user['password'])) {
                    //user not found
                    $errors[]='Password not correct.';
+                   $_SESSION['password_error']='Password not correct.';
                 }
                 else{
                     $userName=$user['name'];
@@ -32,6 +34,7 @@
             }
             else{
                 $errors[]='email not found';
+                $_SESSION['email_error']='Email is not valid.';
             }
           
             
@@ -46,7 +49,7 @@
         else{
             $_SESSION['success']="login successfully";
             $_SESSION['login']="$userName";
-          
+            $_SESSION['id']=$user['id'];
            header("location:../index.php");
         }
 
